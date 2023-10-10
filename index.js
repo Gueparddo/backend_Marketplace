@@ -1,82 +1,52 @@
-// const express = require('express')
-// const app = express()
+const express = require('express') // requiriendo o importando express
+const app = express() // instancia de express
 
-// const PORT = 3000;
+// esto es configuracion extra para leer json
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// app.post('/perro', function (require, response) {
-//   response.send('Hello World')
-// })
+const PORT = 3000;
 
-// app.get('/', function(req,response){
-//     response.send("Estamos alive")
-// })
+// todo lo que esta despues del dominio de la pagina se llama
+// query params
+// https://www.linkedin.com/search/results/all/?fetchDeterministicClustersOnly=true&heroEntityKey=urn%3Ali%3Afsd_profile%3AACoAAEStccABwFbxLmyPMvPfmMorb5ot2zaeApQ&keywords=moises%20mu%C3%B1oz&origin=RICH_QUERY_TYPEAHEAD_HISTORY&position=0&searchId=caa96fbb-d1e1-4fc0-b8e7-ec5b18272887&sid=.Zj&spellCorrectionEnabled=true
 
-// app.listen(PORT,()=>{
-//     console.log(`server running in port ${PORT} 🚀🤘🏼`)
-// })
+app.post('/createUser/:name/:lastName/:age/:favouriteColor/', (request, response) => {
+  // const name = request.params.name;
+  // const lastName = request.params.lastName;
+  // const age = request.params.age;
+  // const favouriteColor = request.params.favouriteColor
+  const {name, lastName, age, favouriteColor} = request.params; // => destructuramos
+  const { password } = request.body
 
-// funciones
-// pequeñas piezas de codigo, que hacen una sola cosa en especifico
-// nombres descriptivos
-// la tienes que mandar llamar pero con parentesis ()
+  // solo cuando el "value" es una variable la puedes utilizar como "key"
+  response.status(200).json({
+    // todo lo demas viene del params
+    name,
+    lastName,
+    age,
+    favouriteColor,
+    password, // esta info viene del body
+    meCaeMal: true // harcodear respuesta
+  })
+  // JSON => JavaScript Object Notation === {}
+})
 
-// convencional o tradicional
-// 1. con la palabra reservada function
-// 2. nombre de la funcion
-// 3. parentesis y las llaves
+app.get('/', (request,response) => {
+    response.send("metodo get")
+});
 
-const name = 'moy6'; // global scope
-// const no se reasigna
-// var y let si se reasigna
+app.put('/', (request,response) => {
+  response.send("metodo put")
+});
 
-function printName () {
-  console.log('hola')
-}
+app.delete('/', (request,response) => {
+  response.send("metodo delete")
+})
 
-// arrow functions ES6 = estandar para escribir JS
-// se llaman arrow por =>
-// 1. la palabra reservada CONST o let
-// 2. nombre de la funcion
-// 3. = () => {}
-
-// 1er ejemplo
-// const printNames = () => {
-//   console.log('hola entre llaves')
-// };
-
-// 2. ejemplo: si la logica cabe en una sola linea puedes eliminar las llaves
-// const printNames = () => console.log('hola desde una sola linea');
-
-// parametros de una funcion
-// cuando solo le pasas un parametro tambien puedes eliminar los parentesis
-const printNames = name => console.log(`hola ${name} desde parametros`); // hola perro desde parametros
-// printNames('esteban');
-// printNames('moy6');
-// printNames('fora')
-
-const printNameAndLastname = (name, lastName) => {
-  console.log(`hola me llamo ${name} y mi apellido es ${lastName}`) // esto es CONCATENAR con bactick `${}`
-}
-
-printNameAndLastname('esteban', 'gutierrez');
+// levantamos el server
+app.listen(PORT,()=>{
+    console.log(`server running in port ${PORT} 🚀🤘🏼`)
+})
 
 
-const sumTwoNumbers = (num1, num2) => {
-  const result = num1 + num2;
-  return result;
-}
-
-const mulResAnt = (resAnt, num3) =>{
-  return resAnt * num3
-  //console.log(resAnt * num3);
-}
-
-const dividedByTwo = (mulResAnt, num4) =>{
-  console.log(`El resultado dividido entre dos es ${mulResAnt / num4}`);
-}
-
-const answer = sumTwoNumbers(5, 5)
-
-const answer2 = mulResAnt(answer, 2)
-
-dividedByTwo(answer2, 2)
