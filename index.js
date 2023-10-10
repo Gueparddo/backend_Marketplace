@@ -32,6 +32,11 @@ app.post('/createUser/:name/:lastName/:age/:favouriteColor/', (request, response
   // JSON => JavaScript Object Notation === {}
 })
 
+// metodo post
+// name, price, => params
+// quantity, imagen, color => body
+// respuesta => ver toda la info del producto, ok: true, message: 'producto dado de alta'
+
 app.get('/', (request,response) => {
     response.send("metodo get")
 });
